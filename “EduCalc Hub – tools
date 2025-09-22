@@ -1,153 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduCalc Hub – Student Calculators & Converters</title>
-  <meta name="description" content="EduCalc Hub offers free online student calculators, converters, and study tools. Convert marks to percentage, calculate GPA, predict exam ranks, and more.">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9fafc;
-      color: #333;
-    }
-    header {
-      background: #4f46e5;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-    header p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-    section {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #4f46e5;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h3 {
-      margin-top: 0;
-      color: #111827;
-    }
-    footer {
-      background: #1f2937;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCalc Hub – Student Calculators & Converters</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3a1;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(74, 111, 165, 0.9), rgba(22, 96, 136, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a6fa5" opacity="0.2"/><path d="M0 0L100 100" stroke="white" stroke-width="2" opacity="0.1"/><path d="M100 0L0 100" stroke="white" stroke-width="2" opacity="0.1"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* Category Navigation */
+        .category-nav {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .category-nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .category-nav a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .category-nav a:hover, .category-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Tools Grid */
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-card-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tool-card-body {
+            padding: 1.5rem;
+        }
+        
+        .tool-card-body p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #3da58a;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-nav ul {
+                justify-content: flex-start;
+            }
+        }
+        
+        /* Tool Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .tool-interface {
+            margin-top: 1.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .results {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>EduCalc Hub</h1>
-    <p>Student Calculators, Converters & Study Tools – Free & Easy to Use</p>
-  </header>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+                <h1>EduCalc Hub</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tools">All Tools</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <!-- Converters -->
-  <section>
-    <h2>Converters</h2>
-    <div class="grid">
-      <div class="card"><h3>Marks → Percentage Converter</h3><p>Convert marks to percentage and vice versa.</p></div>
-      <div class="card"><h3>CGPA → GPA/Percentage Converter</h3><p>Convert CGPA to GPA or percentage formats.</p></div>
-      <div class="card"><h3>Grade → Percentage Converter</h3><p>Change grades into percentage equivalents.</p></div>
-      <div class="card"><h3>Unit Converter</h3><p>Convert units like cm-inch, kg-lb, °C-°F.</p></div>
-      <div class="card"><h3>Currency Converter</h3><p>Convert currencies for international students.</p></div>
-      <div class="card"><h3>Number System Converter</h3><p>Convert numbers between binary, decimal, hex.</p></div>
-      <div class="card"><h3>Language Transliteration</h3><p>Convert text between English, Hindi & regional scripts.</p></div>
-      <div class="card"><h3>File Converters</h3><p>Convert PDFs into Word, PPT, or images and vice versa.</p></div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Student Calculators & Converters</h2>
+            <p>Your all-in-one platform for academic tools - converters, calculators, generators, and trackers to make student life easier.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search for tools...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <div class="category-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#converters" class="active">Converters</a></li>
+                <li><a href="#calculators">Calculators</a></li>
+                <li><a href="#generators">Generators</a></li>
+                <li><a href="#trackers">Trackers</a></li>
+                <li><a href="#document-tools">Document Tools</a></li>
+            </ul>
+        </div>
     </div>
-  </section>
 
-  <!-- Calculators -->
-  <section>
-    <h2>Calculators</h2>
-    <div class="grid">
-      <div class="card"><h3>GPA/CGPA Calculator</h3><p>Calculate GPA or CGPA from grades.</p></div>
-      <div class="card"><h3>Weighted Grade Calculator</h3><p>Calculate weighted grades across subjects.</p></div>
-      <div class="card"><h3>Final Exam Percentage</h3><p>Find final exam percentage from scores.</p></div>
-      <div class="card"><h3>Cut-off Marks Calculator</h3><p>Calculate admission cut-off marks.</p></div>
-      <div class="card"><h3>Attendance Calculator</h3><p>Calculate attendance percentage.</p></div>
-      <div class="card"><h3>Algebra Calculator</h3><p>Solve algebraic equations and expressions.</p></div>
-      <div class="card"><h3>Trigonometry Calculator</h3><p>Calculate trigonometric values and identities.</p></div>
-      <div class="card"><h3>Geometry Calculator</h3><p>Find area, perimeter, and volume.</p></div>
-      <div class="card"><h3>Probability & Statistics</h3><p>Perform mean, median, mode, probability.</p></div>
-      <div class="card"><h3>Physics Formula Calculator</h3><p>Solve physics equations like force, energy, velocity.</p></div>
-      <div class="card"><h3>Chemistry Calculator</h3><p>Solve molarity & normality problems.</p></div>
-      <div class="card"><h3>JEE Rank Predictor</h3><p>Predict ranks based on JEE exam scores.</p></div>
-      <div class="card"><h3>NEET Rank Predictor</h3><p>Predict ranks based on NEET scores.</p></div>
-      <div class="card"><h3>GATE Rank Calculator</h3><p>Convert GATE exam scores to ranks.</p></div>
-      <div class="card"><h3>UPSC Age Eligibility</h3><p>Check age eligibility for UPSC exams.</p></div>
-    </div>
-  </section>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Converters Section -->
+        <section id="converters">
+            <h2 class="section-title">Converters</h2>
+            <div class="tools-grid">
+                <!-- Percentage Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-percentage"></i>
+                        <h3>Percentage Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert marks to percentage and vice versa with this easy-to-use tool.</p>
+                        <button class="btn use-tool" data-tool="percentage-converter">Use Tool</button>
+                    </div>
+                </div>
 
-  <!-- Generators -->
-  <section>
-    <h2>Generators</h2>
-    <div class="grid">
-      <div class="card"><h3>Quiz/MCQ Generator</h3><p>Generate practice quizzes or MCQs.</p></div>
-      <div class="card"><h3>Flashcard Generator</h3><p>Create flashcards for studying.</p></div>
-      <div class="card"><h3>Essay/Paragraph Generator</h3><p>AI-powered essay or paragraph generator.</p></div>
-      <div class="card"><h3>Study Plan/Timetable Generator</h3><p>Create a custom study timetable.</p></div>
-      <div class="card"><h3>Citation Generator</h3><p>Generate citations in APA, MLA, or Chicago.</p></div>
-      <div class="card"><h3>Bibliography Generator</h3><p>Create bibliographies from sources.</p></div>
-      <div class="card"><h3>Flowchart Generator</h3><p>Generate flowcharts for projects.</p></div>
-      <div class="card"><h3>LaTeX Equation Generator</h3><p>Generate LaTeX equations for academics.</p></div>
-    </div>
-  </section>
+                <!-- CGPA/GPA/Percentage Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>CGPA/GPA/Percentage Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert CGPA to GPA or percentage formats for various grading systems.</p>
+                        <button class="btn use-tool" data-tool="cgpa-converter">Use Tool</button>
+                    </div>
+                </div>
 
-  <!-- Trackers -->
-  <section>
-    <h2>Trackers</h2>
-    <div class="grid">
-      <div class="card"><h3>Attendance Tracker</h3><p>Track attendance to meet 75% requirement.</p></div>
-      <div class="card"><h3>Study Hours Tracker</h3><p>Track study hours daily or weekly.</p></div>
-      <div class="card"><h3>Exam Countdown</h3><p>Countdown timer for upcoming exams.</p></div>
-      <div class="card"><h3>Backlog Tracker</h3><p>Track pending backlog subjects.</p></div>
-      <div class="card"><h3>Pomodoro Study Timer</h3><p>Use Pomodoro technique for study focus.</p></div>
-    </div>
-  </section>
+                <!-- Grade to Percentage Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>Grade to Percentage Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Change letter grades into percentage equivalents based on your grading system.</p>
+                        <button class="btn use-tool" data-tool="grade-converter">Use Tool</button>
+                    </div>
+                </div>
 
-  <!-- Document Tools -->
-  <section>
-    <h2>Document Tools</h2>
-    <div class="grid">
-      <div class="card"><h3>Word Counter</h3><p>Count words in assignments or essays.</p></div>
-      <div class="card"><h3>Character Counter</h3><p>Count characters in texts or essays.</p></div>
-      <div class="card"><h3>Reading Time Calculator</h3><p>Estimate reading time from text length.</p></div>
-      <div class="card"><h3>Plagiarism Checker</h3><p>Check documents for plagiarism.</p></div>
-      <div class="card"><h3>PDF Tools</h3><p>Merge, split, or annotate PDF files.</p></div>
-    </div>
-  </section>
+                <!-- Unit Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-ruler-combined"></i>
+                        <h3>Unit Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert between units like cm-inch, kg-lb, °C-°F and many more.</p>
+                        <button class="btn use-tool" data-tool="unit-converter">Use Tool</button>
+                    </div>
+                </div>
 
-  <footer>
-    <p>© 2025 EduCalc Hub – Student Calculators & Converters. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+                <!-- Currency Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>Currency Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert currencies for students studying abroad or making international transactions.</p>
+                        <button class="btn use-tool" data-tool="currency-converter">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Number System Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-superscript"></i>
+                        <h3>Number System Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert numbers between binary, decimal, hexadecimal, and octal systems.</p>
+                        <button class="btn use-tool" data-tool="number-converter">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Language Transliteration Converter -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-language"></i>
+                        <h3>Language Transliteration Converter</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert text between English, Hindi, and regional scripts with accurate transliteration.</p>
+                        <button class="btn use-tool" data-tool="language-converter">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- File Converters -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-file-contract"></i>
+                        <h3>File Converters</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Convert PDFs into Word, PPT, or images and vice versa while preserving formatting.</p>
+                        <button class="btn use-tool" data-tool="file-converter">Use Tool</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculators Section -->
+        <section id="calculators">
+            <h2 class="section-title">Calculators</h2>
+            <div class="tools-grid">
+                <!-- GPA/CGPA Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-calculator"></i>
+                        <h3>GPA/CGPA Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Calculate GPA or CGPA from your grades with customizable credit systems.</p>
+                        <button class="btn use-tool" data-tool="gpa-calculator">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Weighted Grade Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3>Weighted Grade Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Calculate weighted grades across subjects based on their credit values.</p>
+                        <button class="btn use-tool" data-tool="weighted-grade-calculator">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Final Exam Percentage Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Final Exam Percentage Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Find final exam percentage from scores with different weighting systems.</p>
+                        <button class="btn use-tool" data-tool="final-exam-calculator">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Cut-off Marks Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-cut"></i>
+                        <h3>Cut-off Marks Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Calculate admission cut-off marks for various colleges and universities.</p>
+                        <button class="btn use-tool" data-tool="cutoff-calculator">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Attendance Percentage Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-user-check"></i>
+                        <h3>Attendance Percentage Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Calculate attendance percentage from classes attended and missed.</p>
+                        <button class="btn use-tool" data-tool="attendance-calculator">Use Tool</button>
+                    </div>
+                </div>
+
+                <!-- Algebra Calculator -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <i class="fas fa-square-root-alt"></i>
+                        <h3>Algebra Calculator</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <p>Solve algebraic equations and expressions with step-by-step 
